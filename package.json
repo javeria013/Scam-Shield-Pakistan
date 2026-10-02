@@ -1,0 +1,7 @@
+{
+  "name": "scam-shield-pakistan",
+  "version": "1.0.0",
+  "description": "AI scam detector for Pakistani WhatsApp/SMS/email messages",
+  "private": true,
+  "engines": { "node": ">=18" }
+}

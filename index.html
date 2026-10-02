@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scam Shield Pakistan – AI Scam Detector</title>
+  <meta name="description" content="Paste a suspicious WhatsApp, SMS or email message and check it for scam warning signs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Navigation ===== -->
+  <header class="site-header">
+    <a class="brand" href="#home">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6Z"/></svg>
+      Scam Shield Pakistan
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button>
+    <nav id="nav">
+      <a href="#home">Home</a>
+      <a href="#checker">Scam Checker</a>
+      <a href="#scams">Common Scams</a>
+      <a href="#tips">Safety Tips</a>
+      <a href="#report">Report Scam</a>
+      <a href="#about">About Project</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Home ===== -->
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <h1>Got a strange message? Check it before you reply.</h1>
+        <p>Paste a WhatsApp, SMS or email message. Our AI looks for scam warning signs and tells you what to do next. It understands English, Urdu and Roman Urdu.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#checker">Check a message</a>
+          <a class="btn ghost" href="#scams">See common scams</a>
+        </div>
+      </div>
+
+      <!-- A sample message showing what the tool highlights -->
+      <div class="sample" aria-label="Example of a scam message with warning signs highlighted">
+        <p class="sample-from">SMS from 8xxx</p>
+        <p class="sample-msg">
+          <mark>HBL Alert:</mark> Your account will be <mark>blocked within 24 hours</mark>.
+          Verify now at <mark>http://hbl-verify-pk.xyz</mark> and enter your <mark>PIN and OTP</mark>.
+        </p>
+        <div class="sample-verdict"><span class="badge scam">Likely Scam</span><span>4 warning signs found</span></div>
+      </div>
+    </section>
+
+    <!-- ===== Scam Checker ===== -->
+    <section id="checker" class="section">
+      <h2>Scam Checker</h2>
+      <p class="lead">Paste the message below. Never type your real OTP, PIN or password here.</p>
+
+      <div class="checker">
+        <label for="messageInput" class="sr-only">Message to check</label>
+        <textarea id="messageInput" dir="auto" maxlength="2000" rows="7"
+          placeholder="Paste a suspicious message here (English, Urdu or Roman Urdu)..."></textarea>
+        <div class="checker-bar">
+          <span class="count" id="charCount">0 / 2000</span>
+          <div class="btn-row">
+            <button class="btn ghost" id="resetBtn" type="button">Clear</button>
+            <button class="btn primary" id="analyzeBtn" type="button">Analyze Message</button>
+          </div>
+        </div>
+
+        <p class="try-title">Try an example</p>
+        <div class="chips" id="examples"></div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="loading" id="loading" hidden role="status">
+        <span class="spinner"></span> Analyzing message... this takes a few seconds.
+      </div>
+
+      <!-- Error / notice -->
+      <p class="notice" id="notice" hidden></p>
+
+      <!-- Result card (filled in by script.js) -->
+      <article class="result" id="result" hidden aria-live="polite">
+        <div class="result-top">
+          <span class="badge" id="riskBadge"></span>
+          <button class="btn ghost small" id="resetBtn2" type="button">Check another message</button>
+        </div>
+
+        <div id="meterBox">
+          <div class="meter-label"><span>AI confidence</span><strong id="confValue"></strong></div>
+          <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+          <p class="meter-help">This shows how sure the AI is about its own answer. It is not a guarantee. Always double-check with your bank or company.</p>
+        </div>
+
+        <h3>Why this result?</h3>
+        <p id="explanation"></p>
+
+        <h3>Your message (risky parts highlighted)</h3>
+        <p class="highlighted" id="highlighted" dir="auto"></p>
+
+        <h3>Warning signs</h3>
+        <div class="chips" id="ruleChips"></div>
+        <ul id="signsList"></ul>
+
+        <h3>What you should do</h3>
+        <ul id="adviceList"></ul>
+        <p class="small-note">Think you were scammed? See the <a href="#report">Report Scam</a> section.</p>
+      </article>
+
+      <!-- Recent checks (saved on this device only) -->
+      <div class="history" id="historyBox" hidden>
+        <div class="history-head">
+          <h3>Recent checks</h3>
+          <button class="link-btn" id="clearHistory" type="button">Clear history</button>
+        </div>
+        <p class="small-note">Saved only in this browser on your device. Nothing is stored on a server.</p>
+        <ul id="historyList"></ul>
+      </div>
+    </section>
+
+    <!-- ===== Common Scams ===== -->
+    <section id="scams" class="section">
+      <h2>Common scams in Pakistan</h2>
+      <div class="grid">
+        <div class="card"><div class="icon">🏦</div><h3>Fake bank messages</h3><p>"Your account will be blocked." They send a link and ask for your PIN or OTP. Banks never ask for these.</p></div>
+        <div class="card"><div class="icon">📱</div><h3>Easypaisa / JazzCash</h3><p>"Money was sent by mistake, please return it." The first transfer is fake or the caller wants your wallet PIN.</p></div>
+        <div class="card"><div class="icon">📦</div><h3>Courier and parcel</h3><p>"Pay a small redelivery fee." The link steals your card details. Check the parcel in the official courier app.</p></div>
+        <div class="card"><div class="icon">🎁</div><h3>Prize and BISP messages</h3><p>"You won Rs 25,000!" Real prizes never ask for a fee, tax or CNIC details first.</p></div>
+        <div class="card"><div class="icon">💼</div><h3>Fake online jobs</h3><p>"Earn Rs 5,000 daily from home." They ask for a registration fee, then disappear.</p></div>
+        <div class="card"><div class="icon">🔑</div><h3>OTP requests</h3><p>A caller says they are from your bank and asks for the code you just received. That code gives them access.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Safety Tips ===== -->
+    <section id="tips" class="section">
+      <h2>Safety tips</h2>
+      <ul class="tips">
+        <li><strong>Never share your OTP, PIN or password.</strong> No bank, wallet or company needs it from you.</li>
+        <li><strong>Do not click links in unexpected messages.</strong> Open the official app or type the website yourself.</li>
+        <li><strong>Stop when you feel rushed.</strong> Scammers use fear and short deadlines to stop you thinking.</li>
+        <li><strong>Real prizes and jobs are free.</strong> If someone asks for a fee first, it is a scam.</li>
+        <li><strong>Call the official number.</strong> Use the number on the back of your card or the company's website, not the one in the message.</li>
+        <li><strong>Talk to someone.</strong> Show the message to family or friends before you act.</li>
+      </ul>
+    </section>
+
+    <!-- ===== Report Scam ===== -->
+    <section id="report" class="section">
+      <h2>Report a scam</h2>
+      <p class="lead">If you lost money, contact your bank or wallet company first, then report it. Contact details can change, so confirm them on the official websites.</p>
+      <div class="grid">
+        <div class="card"><h3>Cybercrime (NCCIA)</h3><p>The National Cyber Crime Investigation Agency now handles online fraud complaints. Report online at <strong>nccia.gov.pk</strong> or call the cybercrime helpline <strong>1799</strong>.</p></div>
+        <div class="card"><h3>Spam and fraud SMS (PTA)</h3><p>Forward the spam SMS to <strong>9000</strong>. Or file a complaint at <strong>complaint.pta.gov.pk</strong> or call <strong>0800-55055</strong>.</p></div>
+        <div class="card"><h3>Your bank or wallet</h3><p>Call the helpline printed on your card or in the official app. Ask them to block the account or card quickly.</p></div>
+        <div class="card"><h3>WhatsApp and social media</h3><p>Use the Report and Block options inside the app on the scam number or profile.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about" class="section">
+      <h2>About this project</h2>
+      <p class="lead">Scam Shield Pakistan is a student AI project. It uses two checks together.</p>
+      <div class="grid two">
+        <div class="card"><h3>1. Rule-based check</h3><p>The browser looks for known scam words and risky links, in English, Urdu and Roman Urdu. It is fast and works without AI.</p></div>
+        <div class="card"><h3>2. AI check</h3><p>The message is sent to a secure server function. It asks Google Gemini to judge the message, and the secret API key never reaches your browser.</p></div>
+      </div>
+      <p>The final result combines both. If the rules find more danger than the AI, the risk level is raised by one step.</p>
+      <p class="disclaimer"><strong>Please note:</strong> This tool can make mistakes. It is a helper, not a replacement for your own judgment, your bank, or the police. Technology used: HTML, CSS, JavaScript, Vercel serverless functions and the Gemini API.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">Scam Shield Pakistan – AI course project. Stay alert, stay safe.</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<h1>live server</h1>
